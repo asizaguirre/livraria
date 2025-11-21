@@ -1,17 +1,14 @@
 # Stage 1: Build the Angular application
 FROM node:20-alpine AS build
 
-# Set the working directory
-WORKDIR /app
+# Copy the Angular application directory to the container
+COPY biblioteca-web /app/biblioteca-web
 
-# Copy package.json and package-lock.json (if exists)
-COPY package.json package-lock.json ./
+# Set the working directory inside the Angular app
+WORKDIR /app/biblioteca-web
 
 # Install dependencies
 RUN npm install
-
-# Copy the rest of the application code
-COPY . .
 
 # Build the Angular application
 # Use --configuration production for production builds

@@ -34,7 +34,7 @@ services:
 
   web:
     build:
-      context: ../biblioteca-web # Assuming biblioteca-web is a sibling directory to Livraria
+      context: .
       dockerfile: Dockerfile.frontend
     restart: always
     ports:
