@@ -1,219 +1,221 @@
-# 📚 Livraria: Modern Library Management System
+# 📚 Livraria: Sistema de Gerenciamento de Biblioteca Moderno
 
-## Overview
+## Visão Geral
 
-The `Livraria` project is a comprehensive and modern library management system, meticulously designed with a focus on robust architecture, clean code, and best practices. It provides a seamless experience for managing books, authors, and subjects through a powerful backend API and an intuitive Angular frontend. The entire system is containerized using Docker, ensuring easy setup, consistent deployment, and scalability.
+O projeto `Livraria` é um sistema de gerenciamento de biblioteca moderno e abrangente, meticulosamente projetado com foco em uma arquitetura robusta, código limpo e melhores práticas. Ele oferece uma experiência fluida para o gerenciamento de livros, autores e assuntos através de uma poderosa API de backend e um frontend Angular intuitivo. Todo o sistema é conteinerizado usando Docker, garantindo fácil configuração, implantação consistente e escalabilidade.
 
-This system embodies a commitment to high-quality software development, utilizing a microservices-inspired approach to deliver a functional, maintainable, and extensible solution.
+**Agradecimentos:** Gostaríamos de expressar nosso sincero agradecimento a **Paulo Jacques** por fornecer um material excelente e valioso que foi fundamental para a implementação deste sistema. Sua contribuição foi inestimável.
 
-## 🚀 Architecture
+Este sistema incorpora um compromisso com o desenvolvimento de software de alta qualidade, utilizando uma abordagem inspirada em microsserviços para entregar uma solução funcional, manutenível e extensível.
 
-The system follows a decoupled, microservices-inspired architecture, composed of a robust frontend, a powerful backend API, and a dedicated PostgreSQL database, all orchestrated via Docker Compose and exposed through Nginx. This design promotes modularity, scalability, and ease of maintenance.
+## 🚀 Arquitetura
 
-### Components and Technologies
+O sistema segue uma arquitetura desacoplada e inspirada em microsserviços, composta por um frontend robusto, uma poderosa API de backend e um banco de dados PostgreSQL dedicado, tudo orquestrado via Docker Compose e exposto através do Nginx. Este design promove modularidade, escalabilidade e facilidade de manutenção, refletindo as melhores práticas em desenvolvimento de sistemas distribuídos.
 
-*   **Frontend (Web Application)**
+### Componentes e Tecnologias
+
+*   **Frontend (Aplicação Web)**
     *   **Framework:** Angular v21.0.0
-    *   **Language:** TypeScript
-    *   **Styling:** Bootstrap v5.3.8 for a responsive and modern user interface, complemented by SCSS for custom styling.
-    *   **User Experience Enhancements:** `ngx-mask` v20.0.3 for intuitive input masking.
-    *   **Server-Side Rendering (SSR):** Implemented using Angular SSR to enhance performance, improve SEO, and provide a faster initial load experience.
-    *   **Deployment:** Packaged into a lightweight Docker image and served efficiently by Nginx.
+    *   **Linguagem:** TypeScript
+    *   **Estilização:** Bootstrap v5.3.8 para uma interface de usuário responsiva e moderna, complementado por SCSS para estilização personalizada.
+    *   **Melhorias na Experiência do Usuário:** `ngx-mask` v20.0.3 para mascaramento de entrada intuitivo.
+    *   **Renderização no Lado do Servidor (SSR):** Implementado usando Angular SSR para melhorar o desempenho, otimizar o SEO e proporcionar uma experiência de carregamento inicial mais rápida.
+    *   **Implantação:** Empacotado em uma imagem Docker leve e servido eficientemente pelo Nginx.
 
-*   **Backend (RESTful API)**
-    *   **Framework:** Spring Boot v3.2.0, providing a solid foundation for enterprise-grade applications.
-    *   **Language:** Java 17, leveraging modern language features for clean and efficient code.
-    *   **Build Tool:** Maven, managing project dependencies and the build lifecycle.
-    *   **Data Persistence:** Spring Data JPA with Hibernate for robust Object-Relational Mapping (ORM), facilitating seamless interaction with the database.
-    *   **Database Migrations:** Flyway for reliable and version-controlled database schema evolution, ensuring consistency across environments.
-    *   **API Documentation:** Springdoc OpenAPI (integrated with Swagger UI) provides interactive documentation for all API endpoints, simplifying development and integration.
-    *   **Object Mapping:** MapStruct for high-performance and type-safe Data Transfer Object (DTO) to Entity mapping, minimizing boilerplate code.
-    *   **Reporting:** JasperReports for dynamic and customizable report generation (e.g., book listings by author), fulfilling complex business intelligence needs.
-    *   **Validation:** Jakarta Bean Validation ensures data integrity and consistency across all API requests.
-    *   **Code Quality & Productivity:** Lombok is used to reduce boilerplate code (e.g., getters, setters, constructors), promoting cleaner and more readable classes.
-    *   **Development Tools:** Spring Boot DevTools for hot reloading and faster feedback cycles during development.
+*   **Backend (API RESTful)**
+    *   **Framework:** Spring Boot v3.2.0, fornecendo uma base sólida para aplicações de nível empresarial.
+    *   **Linguagem:** Java 17, aproveitando os recursos modernos da linguagem para um código limpo e eficiente.
+    *   **Ferramenta de Build:** Maven, gerenciando dependências do projeto e o ciclo de vida da construção.
+    *   **Persistência de Dados:** Spring Data JPA com Hibernate para um robusto Mapeamento Objeto-Relacional (ORM), facilitando a interação perfeita com o banco de dados.
+    *   **Migrações de Banco de Dados:** Flyway para evolução de esquema de banco de dados confiável e com controle de versão, garantindo consistência entre os ambientes.
+    *   **Documentação da API:** Springdoc OpenAPI (integrado com Swagger UI) fornece documentação interativa para todos os endpoints da API, simplificando o desenvolvimento e a integração.
+    *   **Mapeamento de Objetos:** MapStruct para mapeamento de DTO (Data Transfer Object) para Entidade de alto desempenho e tipo seguro, minimizando o código boilerplate.
+    *   **Geração de Relatórios:** JasperReports para geração de relatórios dinâmicos e personalizáveis (por exemplo, listagens de livros por autor), atendendo a necessidades complexas de business intelligence.
+    *   **Validação:** Jakarta Bean Validation garante a integridade e consistência dos dados em todas as requisições da API.
+    *   **Qualidade e Produtividade do Código:** Lombok é usado para reduzir o código boilerplate (por exemplo, getters, setters, construtores), promovendo classes mais limpas e legíveis.
+    *   **Ferramentas de Desenvolvimento:** Spring Boot DevTools para hot reloading e ciclos de feedback mais rápidos durante o desenvolvimento.
 
-*   **Database**
-    *   **Type:** PostgreSQL v13-alpine, a powerful, open-source relational database, chosen for its reliability and advanced features.
-    *   **Purpose:** The central repository for all application data, including books, authors, and subjects.
+*   **Banco de Dados**
+    *   **Tipo:** PostgreSQL v13-alpine, um poderoso banco de dados relacional de código aberto, escolhido por sua confiabilidade e recursos avançados.
+    *   **Finalidade:** O repositório central para todos os dados da aplicação, incluindo livros, autores e assuntos.
 
-*   **Reverse Proxy / Web Server**
-    *   **Type:** Nginx (alpine), a high-performance web server and reverse proxy.
-    *   **Purpose:** Efficiently serves the static assets of the Angular frontend. It manages URL routing, ensuring that all client-side routes are correctly handled by the `index.html` file (Single Page Application routing).
+*   **Proxy Reverso / Servidor Web**
+    *   **Tipo:** Nginx (alpine), um servidor web de alto desempenho e proxy reverso.
+    *   **Finalidade:** Serve eficientemente os ativos estáticos do frontend Angular. Gerencia o roteamento de URL, garantindo que todas as rotas do lado do cliente sejam corretamente tratadas pelo arquivo `index.html` (roteamento de Single Page Application).
 
-*   **Containerization & Orchestration**
-    *   **Tool:** Docker & Docker Compose
-    *   **Purpose:** Each application component (frontend, backend, database) is encapsulated within its own Docker container, ensuring environmental consistency from development to production. Docker Compose orchestrates these containers, managing their lifecycle, network configurations, and inter-communication, simplifying the deployment of the entire multi-service application.
+*   **Conteinerização e Orquestração**
+    *   **Ferramenta:** Docker & Docker Compose
+    *   **Finalidade:** Cada componente da aplicação (frontend, backend, banco de dados) é encapsulado em seu próprio contêiner Docker, garantindo consistência ambiental do desenvolvimento à produção. O Docker Compose orquestra esses contêineres, gerenciando seu ciclo de vida, configurações de rede e intercomunicação, simplificando a implantação de toda a aplicação multi-serviço.
 
-### Communication Flow
+### Fluxo de Comunicação
 
-1.  **User Access:** Users interact with the application through their web browser, which connects to the Nginx web server. Nginx efficiently serves the Angular frontend's static files.
-2.  **Frontend-Backend Interaction:** The Angular frontend makes asynchronous (AJAX) calls to the Spring Boot backend API to retrieve, create, update, and delete data (e.g., fetching a list of books, adding a new author).
-3.  **Backend-Database Interaction:** The Spring Boot backend processes these API requests, interacting with the PostgreSQL database via Spring Data JPA to perform necessary data operations.
-4.  **Internal Networking:** Within the Docker Compose environment, services communicate securely over an internal Docker network. The frontend, when making API calls, addresses the backend service using its Docker service name (`api`).
+1.  **Acesso do Usuário:** Os usuários interagem com a aplicação através de seus navegadores web, que se conectam ao servidor web Nginx. O Nginx serve eficientemente os arquivos estáticos do frontend Angular.
+2.  **Interação Frontend-Backend:** O frontend Angular realiza chamadas assíncronas (AJAX) para a API de backend Spring Boot para recuperar, criar, atualizar e excluir dados (por exemplo, buscar uma lista de livros, adicionar um novo autor).
+3.  **Interação Backend-Banco de Dados:** O backend Spring Boot processa essas requisições da API, interagindo com o banco de dados PostgreSQL via Spring Data JPA para realizar as operações de dados necessárias.
+4.  **Rede Interna:** Dentro do ambiente Docker Compose, os serviços se comunicam de forma segura através de uma rede Docker interna. O frontend, ao fazer chamadas de API, endereça o serviço de backend usando seu nome de serviço Docker (`api`).
 
-## ⚙️ Setup and Running
+## ⚙️ Configuração e Execução
 
-This project leverages Docker for containerization and Docker Compose for orchestration, providing a consistent development and deployment environment. You can run the entire application stack with a single command, or set up individual components locally for development.
+Este projeto utiliza Docker para conteinerização e Docker Compose para orquestração, proporcionando um ambiente consistente de desenvolvimento e implantação. Você pode executar toda a pilha da aplicação com um único comando, ou configurar componentes individuais localmente para desenvolvimento.
 
-### Prerequisites
+### Pré-requisitos
 
-Ensure you have the following installed on your system:
+Certifique-se de ter o seguinte instalado em seu sistema:
 
-*   **Git:** For cloning the repository.
-*   **Docker & Docker Compose:** Essential for running the application stack in containers.
-    *   [Install Docker Engine](https://docs.docker.com/engine/install/)
-    *   [Install Docker Compose](https://docs.docker.com/compose/install/)
-*   **Java Development Kit (JDK) 17 or higher:** Required for local backend development.
-    *   [Download JDK](https://adoptium.net/temurin/releases/)
-*   **Maven:** Build tool for the Java backend.
-    *   [Install Maven](https://maven.apache.org/install.html)
-*   **Node.js (LTS version, e.g., 20.x) & npm:** Required for local frontend development.
-    *   [Download Node.js](https://nodejs.org/en/download/)
-*   **Angular CLI:** Command-line interface for Angular projects.
+*   **Git:** Para clonar o repositório.
+*   **Docker & Docker Compose:** Essenciais para executar a pilha da aplicação em contêineres.
+    *   [Instalar Docker Engine](https://docs.docker.com/engine/install/linux/)
+    *   [Instalar Docker Compose](https://docs.docker.com/compose/install/)
+*   **Java Development Kit (JDK) 17 ou superior:** Necessário para o desenvolvimento local do backend.
+    *   [Baixar JDK](https://adoptium.net/temurin/releases/)
+*   **Maven:** Ferramenta de build para o backend Java.
+    *   [Instalar Maven](https://maven.apache.org/install.html)
+*   **Node.js (versão LTS, por exemplo, 20.x) & npm:** Necessário para o desenvolvimento local do frontend.
+    *   [Baixar Node.js](https://nodejs.org/en/download/)
+*   **Angular CLI:** Interface de linha de comando para projetos Angular.
     ```bash
     npm install -g @angular/cli
     ```
 
-### Running with Docker Compose (Recommended)
+### Executando com Docker Compose (Recomendado)
 
-This method builds and runs the entire application stack (PostgreSQL database, Spring Boot API, and Nginx-served Angular frontend) using Docker containers, providing the most consistent environment.
+Este método constrói e executa toda a pilha da aplicação (banco de dados PostgreSQL, API Spring Boot e frontend Angular servido pelo Nginx) usando contêineres Docker, proporcionando o ambiente mais consistente.
 
-1.  **Clone the repository:**
+1.  **Clone o repositório:**
     ```bash
     git clone https://github.com/asizaguirre/livraria.git
     cd livraria
     ```
-2.  **Build the Spring Boot Backend JAR:**
-    The `api` service in `docker-compose.yml` expects a pre-built JAR file. Navigate to the project root and build the backend:
+2.  **Compile o JAR do Backend Spring Boot:**
+    O serviço `api` em `docker-compose.yml` espera um arquivo JAR pré-compilado. Navegue até a raiz do projeto e compile o backend:
     ```bash
     mvn clean install -DskipTests
     ```
-    This command will create the `biblioteca-0.0.1-SNAPSHOT.jar` (or similar) in the `target/` directory.
+    Este comando criará o `biblioteca-0.0.1-SNAPSHOT.jar` (ou similar) no diretório `target/`.
 
-3.  **Build and Start the Docker Compose Stack:**
-    From the project root directory where `docker-compose.yml` is located:
+3.  **Construa e Inicie a Pilha Docker Compose:**
+    A partir do diretório raiz do projeto onde `docker-compose.yml` está localizado:
     ```bash
     docker-compose up --build -d
     ```
-    *   `--build`: Rebuilds images if changes have been made to Dockerfiles or contexts.
-    *   `-d`: Runs containers in detached mode (in the background).
+    *   `--build`: Reconstrói as imagens se houver alterações nos Dockerfiles ou contextos.
+    *   `-d`: Executa os contêineres em modo "detached" (em segundo plano).
 
-4.  **Verify Application Status:**
-    Check the status of running containers:
+4.  **Verifique o Status da Aplicação:**
+    Verifique o status dos contêineres em execução:
     ```bash
     docker-compose ps
     ```
-    Ensure all services (`db`, `api`, `web`) are healthy and running.
+    Certifique-se de que todos os serviços (`db`, `api`, `web`) estão saudáveis e em execução.
 
-5.  **Access the Application:**
-    *   **Frontend:** Open your web browser and navigate to `http://localhost:4200`
-    *   **Backend API (Swagger UI):** Access the API documentation at `http://localhost:8080/swagger-ui/index.html`
+5.  **Acesse a Aplicação:**
+    *   **Frontend:** Abra seu navegador web e navegue para `http://localhost:4200`
+    *   **API de Backend (Swagger UI):** Acesse a documentação da API em `http://localhost:8080/swagger-ui/index.html`
 
-6.  **Stop the Application:**
-    To stop and remove all containers, networks, and volumes created by `docker-compose up`:
+6.  **Pare a Aplicação:**
+    Para parar e remover todos os contêineres, redes e volumes criados por `docker-compose up`:
     ```bash
     docker-compose down -v
     ```
-    *   `-v`: Removes named volumes declared in the `volumes` section of the `docker-compose.yml` file (e.g., `db_data`), which is useful for a clean database slate, though use with caution as it deletes all persistent data.
+    *   `-v`: Remove volumes nomeados declarados na seção `volumes` do arquivo `docker-compose.yml` (por exemplo, `db_data`), o que é útil para um banco de dados limpo, mas use com cautela, pois ele exclui todos os dados persistentes.
 
-### Running Components Locally (Development Mode)
+### Executando Componentes Localmente (Modo de Desenvolvimento)
 
-This section details how to run the frontend and backend services independently without Docker Compose, which can be useful for focused development and debugging.
+Esta seção detalha como executar os serviços de frontend e backend independentemente, sem o Docker Compose, o que pode ser útil para desenvolvimento e depuração focados.
 
-#### 1. Start the PostgreSQL Database (via Docker)
+#### 1. Inicie o Banco de Dados PostgreSQL (via Docker)
 
-It's highly recommended to run the database in Docker even for local development to maintain consistency with the production environment and simplify setup.
+É altamente recomendado executar o banco de dados em Docker mesmo para desenvolvimento local, a fim de manter a consistência com o ambiente de produção e simplificar a configuração.
 
 ```bash
 docker-compose up -d db
 ```
-This will start only the `db` service. You can stop it with `docker-compose down db`.
+Isso iniciará apenas o serviço `db`. Você pode pará-lo com `docker-compose down db`.
 
-#### 2. Run the Spring Boot Backend Locally
+#### 2. Execute o Backend Spring Boot Localmente
 
-1.  **Ensure database is running** (either locally or via Docker as above).
-2.  **Navigate to the backend project root:**
+1.  **Certifique-se de que o banco de dados esteja em execução** (localmente ou via Docker, conforme acima).
+2.  **Navegue até a raiz do projeto backend:**
     ```bash
-    cd /home/alam/Área de trabalho/Workspace/Livraria/ # (or the directory containing pom.xml)
+    cd /home/alam/Área de trabalho/Workspace/Livraria/ # (ou o diretório contendo pom.xml)
     ```
-3.  **Build and run the application:**
+3.  **Compile e execute a aplicação:**
     ```bash
     mvn spring-boot:run
     ```
-    The Spring Boot application will start and be accessible at `http://localhost:8080`.
+    A aplicação Spring Boot será iniciada e estará acessível em `http://localhost:8080`.
 
-#### 3. Run the Angular Frontend Locally
+#### 3. Execute o Frontend Angular Localmente
 
-1.  **Navigate to the frontend project directory:**
+1.  **Navegue até o diretório do projeto frontend:**
     ```bash
     cd biblioteca-web
     ```
-2.  **Install dependencies (if not already done):**
+2.  **Instale as dependências (se ainda não o fez):**
     ```bash
     npm install
     ```
-3.  **Start the Angular development server:**
+3.  **Inicie o servidor de desenvolvimento Angular:**
     ```bash
     ng serve
     ```
-    The Angular development server will launch, and the application will be accessible at `http://localhost:4200`.
+    O servidor de desenvolvimento Angular será iniciado, e a aplicação estará acessível em `http://localhost:4200`.
 
-## 🧪 Testing
+## 🧪 Testes
 
-This project adheres to high quality standards through a comprehensive testing strategy for both its backend API and frontend application. Automated tests ensure the reliability, correctness, and maintainability of the codebase.
+Este projeto adere a altos padrões de qualidade através de uma estratégia de testes abrangente para sua API de backend e aplicação frontend. Testes automatizados garantem a confiabilidade, correção e manutenibilidade da base de código, seguindo as melhores práticas de garantia de qualidade de software.
 
-### Backend Testing
+### Testes de Backend
 
-The Spring Boot backend utilizes a multi-layered testing approach, including unit, integration, and repository tests, leveraging standard Java testing frameworks. This ensures thorough validation of business logic, data access, and API endpoints.
+O backend Spring Boot utiliza uma abordagem de testes em múltiplas camadas, incluindo testes unitários, de integração e de repositório, aproveitando frameworks de teste Java padrão. Isso garante uma validação completa da lógica de negócios, acesso a dados e endpoints da API.
 
-*   **Frameworks:** JUnit 5 (Jupiter) for writing tests, Mockito for mocking dependencies, and Spring Boot Test for integration testing with the Spring context.
-*   **Tools:** JaCoCo for comprehensive code coverage analysis, providing insights into test effectiveness.
+*   **Frameworks:** JUnit 5 (Jupiter) para escrever testes, Mockito para mocking de dependências e Spring Boot Test para testes de integração com o contexto Spring.
+*   **Ferramentas:** JaCoCo para análise abrangente de cobertura de código, fornecendo insights sobre a eficácia dos testes.
 
-#### How to Run Backend Tests
+#### Como Executar Testes de Backend
 
-Navigate to the project root directory (containing `pom.xml`):
+Navegue até o diretório raiz do projeto (contendo `pom.xml`):
 
-1.  **Run all tests (unit and integration):**
+1.  **Execute todos os testes (unitários e de integração):**
     ```bash
     mvn test
     ```
-    This command executes all tests found in the project.
-2.  **Run tests and generate JaCoCo code coverage report:**
+    Este comando executa todos os testes encontrados no projeto.
+2.  **Execute testes e gere o relatório de cobertura de código JaCoCo:**
     ```bash
     mvn clean verify
     ```
-    After execution, a detailed JaCoCo report will be generated. You can view it by opening `target/site/jacoco/index.html` in your web browser. This report highlights lines and branches covered by tests.
-3.  **Skip tests during build (e.g., for faster Docker image creation or deployment):**
+    Após a execução, um relatório JaCoCo detalhado será gerado. Você pode visualizá-lo abrindo `target/site/jacoco/index.html` em seu navegador web. Este relatório destaca as linhas e branches cobertos pelos testes.
+3.  **Pule os testes durante a compilação (por exemplo, para criação mais rápida de imagens Docker ou implantação):**
     ```bash
     mvn clean install -DskipTests
     ```
 
-### Frontend Testing
+### Testes de Frontend
 
-The Angular frontend is equipped with a modern testing setup to ensure component reliability, user interface integrity, and overall application functionality.
+O frontend Angular é equipado com uma configuração de testes moderna para garantir a confiabilidade dos componentes, a integridade da interface do usuário e a funcionalidade geral da aplicação.
 
-*   **Framework:** Vitest, a fast and modern testing framework, is utilized (as indicated by `package.json`).
-*   **Tools:** Vitest typically integrates with environments like JSDOM to simulate a browser environment in Node.js, allowing for efficient component and service testing without a full browser.
+*   **Framework:** Vitest, um framework de teste rápido e moderno, é utilizado (conforme indicado em `package.json`).
+*   **Ferramentas:** O Vitest normalmente se integra com ambientes como o JSDOM para simular um ambiente de navegador no Node.js, permitindo testes eficientes de componentes e serviços sem um navegador completo.
 
-#### How to Run Frontend Tests
+#### Como Executar Testes de Frontend
 
-Navigate to the `biblioteca-web` directory:
+Navegue até o diretório `biblioteca-web`:
 
 ```bash
 cd biblioteca-web
 ```
 
-1.  **Run all frontend tests:**
+1.  **Execute todos os testes de frontend:**
     ```bash
     npm test
     ```
-    This command executes the tests configured in the `test` script of `package.json`, typically launching Vitest in watch mode, providing immediate feedback on code changes.
+    Este comando executa os testes configurados no script `test` de `package.json`, tipicamente iniciando o Vitest em modo de observação (`watch mode`), fornecendo feedback imediato sobre as alterações no código.
 
-## 🤝 Contributing
+## 🤝 Contribuindo
 
-(Optional section: Add guidelines for contributing to the project, e.g., coding standards, pull request process, etc.)
+(Seção opcional: Adicione diretrizes para contribuir com o projeto, por exemplo, padrões de codificação, processo de pull request, etc.)
 
-## 📄 License
+## 📄 Licença
 
-(Optional section: Specify the project's licensing information.)
+(Seção opcional: Especifique as informações de licenciamento do projeto.)
