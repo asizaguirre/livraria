@@ -9,7 +9,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,31 +17,25 @@ public interface LivroMapper {
 
     LivroMapper INSTANCE = Mappers.getMapper(LivroMapper.class);
 
-    @Mapping(target = "autores", ignore = true)
-    @Mapping(target = "assuntos", ignore = true)
+    @Mapping(target = "autoresIds", source = "autores", qualifiedByName = "autoresToAutorIds")
+    @Mapping(target = "assuntosIds", source = "assuntos", qualifiedByName = "assuntosToAssuntoIds")
+    LivroDTO toDto(Livro livro);
+
+    @Mapping(target = "autores", ignore = true) // Handled by service
+    @Mapping(target = "assuntos", ignore = true) // Handled by service
     Livro toEntity(LivroDTO livroDTO);
 
-    @Mapping(source = "autores", target = "autoresIds", qualifiedByName = "autoresToIds")
-    @Mapping(source = "assuntos", target = "assuntosIds", qualifiedByName = "assuntosToIds")
-    LivroDTO toDTO(Livro livro);
-
-    @Named("autoresToIds")
-    default List<Integer> autoresToIds(Set<Autor> autores) {
-        if (autores == null) {
-            return null;
-        }
+    @Named("autoresToAutorIds")
+    default Set<Long> autoresToAutorIds(Set<Autor> autores) {
         return autores.stream()
-                .map(Autor::getCodAu)
-                .collect(Collectors.toList());
+                .map(Autor::getId)
+                .collect(Collectors.toSet());
     }
 
-    @Named("assuntosToIds")
-    default List<Integer> assuntosToIds(Set<Assunto> assuntos) {
-        if (assuntos == null) {
-            return null;
-        }
+    @Named("assuntosToAssuntoIds")
+    default Set<Long> assuntosToAssuntoIds(Set<Assunto> assuntos) {
         return assuntos.stream()
-                .map(Assunto::getCodAs)
-                .collect(Collectors.toList());
+                .map(Assunto::getId)
+                .collect(Collectors.toSet());
     }
 }

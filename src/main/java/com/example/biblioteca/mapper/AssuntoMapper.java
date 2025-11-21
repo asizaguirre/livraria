@@ -10,7 +10,7 @@ public interface AssuntoMapper {
 
     AssuntoMapper INSTANCE = Mappers.getMapper(AssuntoMapper.class);
 
-    Assunto toEntity(AssuntoDTO assuntoDTO);
+    AssuntoDTO toDto(Assunto assunto);
 
-    AssuntoDTO toDTO(Assunto assunto);
+    Assunto toEntity(AssuntoDTO assuntoDTO);
 }

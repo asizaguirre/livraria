@@ -1,0 +1,15 @@
+# Use a lightweight JRE image
+FROM eclipse-temurin:17-jre-alpine
+
+# Set arguments for JAR file and port
+ARG JAR_FILE=target/*.jar
+ARG PORT=8080
+
+# Copy the application JAR file to the container
+COPY ${JAR_FILE} app.jar
+
+# Expose the application port
+EXPOSE ${PORT}
+
+# Set the entrypoint to run the JAR file
+ENTRYPOINT ["java", "-jar", "app.jar"]

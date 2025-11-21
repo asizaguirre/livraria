@@ -3,6 +3,7 @@ package com.example.biblioteca.mapper;
 import com.example.biblioteca.domain.Autor;
 import com.example.biblioteca.dto.AutorDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
@@ -10,7 +11,7 @@ public interface AutorMapper {
 
     AutorMapper INSTANCE = Mappers.getMapper(AutorMapper.class);
 
-    Autor toEntity(AutorDTO autorDTO);
+    AutorDTO toDto(Autor autor);
 
-    AutorDTO toDTO(Autor autor);
+    Autor toEntity(AutorDTO autorDTO);
 }

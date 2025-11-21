@@ -14,11 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class LivroService {
@@ -36,63 +35,68 @@ public class LivroService {
     private LivroMapper livroMapper;
 
     @Transactional(readOnly = true)
-    public Page<LivroDTO> findAll(Pageable pageable, String titulo) {
-        if (StringUtils.hasText(titulo)) {
-            return livroRepository.findByTituloContainingIgnoreCase(titulo, pageable).map(livroMapper::toDTO);
-        }
-        return livroRepository.findAll(pageable).map(livroMapper::toDTO);
+    public Page<LivroDTO> findAll(Pageable pageable) {
+        return livroRepository.findAll(pageable).map(livroMapper::toDto);
     }
 
     @Transactional(readOnly = true)
-    public LivroDTO findById(Integer id) {
-        return livroRepository.findById(id)
-                .map(livroMapper::toDTO)
-                .orElseThrow(() -> new ResourceNotFoundException("Livro não encontrado com o id: " + id));
+    public LivroDTO findById(Long id) {
+        Livro livro = livroRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Livro not found with id " + id));
+        return livroMapper.toDto(livro);
     }
 
     @Transactional
     public LivroDTO create(LivroDTO livroDTO) {
         Livro livro = livroMapper.toEntity(livroDTO);
-        updateRelationships(livro, livroDTO);
+        livro.setAutores(getAutoresFromIds(livroDTO.getAutoresIds()));
+        livro.setAssuntos(getAssuntosFromIds(livroDTO.getAssuntosIds()));
         livro = livroRepository.save(livro);
-        return livroMapper.toDTO(livro);
+        return livroMapper.toDto(livro);
     }
 
     @Transactional
-    public LivroDTO update(Integer id, LivroDTO livroDTO) {
+    public LivroDTO update(Long id, LivroDTO livroDTO) {
         Livro livro = livroRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Livro não encontrado com o id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Livro not found with id " + id));
 
         livro.setTitulo(livroDTO.getTitulo());
         livro.setEditora(livroDTO.getEditora());
         livro.setEdicao(livroDTO.getEdicao());
         livro.setAnoPublicacao(livroDTO.getAnoPublicacao());
         livro.setValor(livroDTO.getValor());
+        livro.setAutores(getAutoresFromIds(livroDTO.getAutoresIds()));
+        livro.setAssuntos(getAssuntosFromIds(livroDTO.getAssuntosIds()));
 
-        updateRelationships(livro, livroDTO);
         livro = livroRepository.save(livro);
-        return livroMapper.toDTO(livro);
+        return livroMapper.toDto(livro);
     }
 
     @Transactional
-    public void delete(Integer id) {
+    public void delete(Long id) {
         if (!livroRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Livro não encontrado com o id: " + id);
+            throw new ResourceNotFoundException("Livro not found with id " + id);
         }
         livroRepository.deleteById(id);
     }
 
-    private void updateRelationships(Livro livro, LivroDTO livroDTO) {
-        List<Autor> autores = autorRepository.findAllById(livroDTO.getAutoresIds());
-        if (autores.size() != livroDTO.getAutoresIds().size()) {
-            throw new ResourceNotFoundException("Um ou mais autores não foram encontrados.");
+    private Set<Autor> getAutoresFromIds(Set<Long> autoresIds) {
+        if (autoresIds == null || autoresIds.isEmpty()) {
+            return new HashSet<>();
         }
-        livro.setAutores(new HashSet<>(autores));
+        return autoresIds.stream()
+                .map(autorId -> autorRepository.findById(autorId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Autor not found with id " + autorId)))
+                .collect(Collectors.toSet());
+    }
 
-        List<Assunto> assuntos = assuntoRepository.findAllById(livroDTO.getAssuntosIds());
-        if (assuntos.size() != livroDTO.getAssuntosIds().size()) {
-            throw new ResourceNotFoundException("Um ou mais assuntos não foram encontrados.");
+    private Set<Assunto> getAssuntosFromIds(Set<Long> assuntosIds) {
+        if (assuntosIds == null || assuntosIds.isEmpty()) {
+            return new HashSet<>();
         }
-        livro.setAssuntos(new HashSet<>(assuntos));
+        return assuntosIds.stream()
+                .map(assuntoId -> assuntoRepository.findById(assuntoId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Assunto not found with id " + assuntoId)))
+                .collect(Collectors.toSet());
     }
 }

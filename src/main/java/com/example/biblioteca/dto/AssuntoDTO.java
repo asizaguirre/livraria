@@ -2,29 +2,20 @@ package com.example.biblioteca.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AssuntoDTO {
 
-    private Integer codAs;
+    private Long id;
 
-    @NotBlank(message = "A descrição do assunto é obrigatória.")
-    @Size(max = 20, message = "A descrição do assunto deve ter no máximo 20 caracteres.")
+    @NotBlank(message = "A descrição do assunto é obrigatória")
+    @Size(max = 100, message = "A descrição do assunto não pode exceder 100 caracteres")
     private String descricao;
-
-    // Getters and Setters
-    public Integer getCodAs() {
-        return codAs;
-    }
-
-    public void setCodAs(Integer codAs) {
-        this.codAs = codAs;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 }

@@ -11,9 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class AutorService {
 
@@ -25,43 +22,36 @@ public class AutorService {
 
     @Transactional(readOnly = true)
     public Page<AutorDTO> findAll(Pageable pageable) {
-        return autorRepository.findAll(pageable).map(autorMapper::toDTO);
+        return autorRepository.findAll(pageable).map(autorMapper::toDto);
     }
 
     @Transactional(readOnly = true)
-    public List<AutorDTO> findAll() {
-        return autorRepository.findAll().stream()
-                .map(autorMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public AutorDTO findById(Integer id) {
-        return autorRepository.findById(id)
-                .map(autorMapper::toDTO)
-                .orElseThrow(() -> new ResourceNotFoundException("Autor não encontrado com o id: " + id));
+    public AutorDTO findById(Long id) {
+        Autor autor = autorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Autor not found with id " + id));
+        return autorMapper.toDto(autor);
     }
 
     @Transactional
     public AutorDTO create(AutorDTO autorDTO) {
         Autor autor = autorMapper.toEntity(autorDTO);
         autor = autorRepository.save(autor);
-        return autorMapper.toDTO(autor);
+        return autorMapper.toDto(autor);
     }
 
     @Transactional
-    public AutorDTO update(Integer id, AutorDTO autorDTO) {
+    public AutorDTO update(Long id, AutorDTO autorDTO) {
         Autor autor = autorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Autor não encontrado com o id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Autor not found with id " + id));
         autor.setNome(autorDTO.getNome());
         autor = autorRepository.save(autor);
-        return autorMapper.toDTO(autor);
+        return autorMapper.toDto(autor);
     }
 
     @Transactional
-    public void delete(Integer id) {
+    public void delete(Long id) {
         if (!autorRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Autor não encontrado com o id: " + id);
+            throw new ResourceNotFoundException("Autor not found with id " + id);
         }
         autorRepository.deleteById(id);
     }

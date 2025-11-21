@@ -1,14 +1,18 @@
 package com.example.biblioteca.exception;
 
-import java.time.Instant;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-public record ErrorResponse(
-    Instant timestamp,
-    String path,
-    Integer status,
-    String error,
-    String message,
-    List<String> details
-) {
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class ErrorResponse {
+    private LocalDateTime timestamp;
+    private String path;
+    private int status;
+    private String error;
+    private String message;
 }

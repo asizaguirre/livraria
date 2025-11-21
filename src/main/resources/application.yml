@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: biblioteca
+  jpa:
+    hibernate:
+      ddl-auto: update # In production, this should be 'validate' or 'none'
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:biblioteca_dev}
+    username: ${DB_USERNAME:user}
+    password: ${DB_PASSWORD:password}
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+# Springdoc OpenAPI (Swagger UI) Configuration
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.example.biblioteca: DEBUG
+    org.springframework: INFO
+    org.hibernate: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:biblioteca_dev}
+    username: ${DB_USERNAME:user}
+    password: ${DB_PASSWORD:password}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:biblioteca_test}
+    username: ${DB_USERNAME:user}
+    password: ${DB_PASSWORD:password}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # For testing, recreate schema on each run
+  flyway:
+    enabled: false # Disable Flyway for test profile, let JPA handle schema
+    
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:biblioteca_prod}
+    username: ${DB_USERNAME:user}
+    password: ${DB_PASSWORD:password}
+  jpa:
+    hibernate:
+      ddl-auto: validate # Crucial for production
+  flyway:
+    enabled: true
+    baseline-on-migrate: true # Good practice for existing databases

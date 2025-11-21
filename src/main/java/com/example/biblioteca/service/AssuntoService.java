@@ -11,9 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class AssuntoService {
 
@@ -25,43 +22,36 @@ public class AssuntoService {
 
     @Transactional(readOnly = true)
     public Page<AssuntoDTO> findAll(Pageable pageable) {
-        return assuntoRepository.findAll(pageable).map(assuntoMapper::toDTO);
-    }
-    
-    @Transactional(readOnly = true)
-    public List<AssuntoDTO> findAll() {
-        return assuntoRepository.findAll().stream()
-                .map(assuntoMapper::toDTO)
-                .collect(Collectors.toList());
+        return assuntoRepository.findAll(pageable).map(assuntoMapper::toDto);
     }
 
     @Transactional(readOnly = true)
-    public AssuntoDTO findById(Integer id) {
-        return assuntoRepository.findById(id)
-                .map(assuntoMapper::toDTO)
-                .orElseThrow(() -> new ResourceNotFoundException("Assunto não encontrado com o id: " + id));
+    public AssuntoDTO findById(Long id) {
+        Assunto assunto = assuntoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Assunto not found with id " + id));
+        return assuntoMapper.toDto(assunto);
     }
 
     @Transactional
     public AssuntoDTO create(AssuntoDTO assuntoDTO) {
         Assunto assunto = assuntoMapper.toEntity(assuntoDTO);
         assunto = assuntoRepository.save(assunto);
-        return assuntoMapper.toDTO(assunto);
+        return assuntoMapper.toDto(assunto);
     }
 
     @Transactional
-    public AssuntoDTO update(Integer id, AssuntoDTO assuntoDTO) {
+    public AssuntoDTO update(Long id, AssuntoDTO assuntoDTO) {
         Assunto assunto = assuntoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Assunto não encontrado com o id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Assunto not found with id " + id));
         assunto.setDescricao(assuntoDTO.getDescricao());
         assunto = assuntoRepository.save(assunto);
-        return assuntoMapper.toDTO(assunto);
+        return assuntoMapper.toDto(assunto);
     }
 
     @Transactional
-    public void delete(Integer id) {
+    public void delete(Long id) {
         if (!assuntoRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Assunto não encontrado com o id: " + id);
+            throw new ResourceNotFoundException("Assunto not found with id " + id);
         }
         assuntoRepository.deleteById(id);
     }
